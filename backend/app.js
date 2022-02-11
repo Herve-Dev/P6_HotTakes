@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const helmet = require('helmet');
+const cors = require('cors');
 const dotenv = require('dotenv').config();
 
 mongoose.connect( process.env.MONGODB_URI , {
@@ -23,7 +24,7 @@ const stuffRoutes = require('./routes/stuff')
 const app = express();
 
 app.use(helmet());
-
+app.use(cors())
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
