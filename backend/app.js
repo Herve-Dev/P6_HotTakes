@@ -23,7 +23,7 @@ const stuffRoutes = require('./routes/stuff')
 
 const app = express();
 
-app.use(helmet()); // erreur d'affichage image avec helmet
+
 app.use(cors())
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,6 +37,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json())
 
+app.use(helmet({
+    crossOriginRessourcePolicy: false,
+})); // erreur d'affichage image avec helmet
 
 app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use('/api/sauces', stuffRoutes)
