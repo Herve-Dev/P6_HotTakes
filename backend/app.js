@@ -23,7 +23,7 @@ const stuffRoutes = require('./routes/stuff')
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet()); // erreur d'affichage image avec helmet
 app.use(cors())
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
