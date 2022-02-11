@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-const dotenv = require('dotenv').config()
+const helmet = require('helmet');
+const dotenv = require('dotenv').config();
 
 mongoose.connect( process.env.MONGODB_URI , {
     dbName: process.env.DB_NAME,
@@ -19,8 +20,9 @@ const userRoutes = require('./routes/user');
 //const Sauce = require('./models/Sauce');
 const stuffRoutes = require('./routes/stuff')
 
-
 const app = express();
+
+app.use(helmet());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -34,8 +36,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json())
 
-app.use('/images', express.static(path.join(__dirname, 'images')))
 
+app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use('/api/sauces', stuffRoutes)
 app.use('/api/auth', userRoutes)
  
