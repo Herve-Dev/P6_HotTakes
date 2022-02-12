@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const Sauce = require('../models/Sauce');
 //const stuffRoutes = require('./routes/stuff');
 
@@ -19,7 +20,12 @@ exports.createSauce = (req, res, next) => {
 }
 
 exports.modifySauce = (req, res, next) => {
-    Sauce.updateOne({ _id: req.params.id }, {...req.body, _id: req.params.id})
+    const sauceObject = req.file ?
+    {
+      ...JSON.parse(req.body.sauce),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : {...req.body };
+    Sauce.updateOne({ _id: req.params.id }, {...sauceObject, _id: req.params.id})
         .then(() => res.status(200).json({ message: 'Sauce modifié !'}))
         .catch(error => res.status(400).json({ error }))
 }
@@ -57,7 +63,7 @@ exports.getAllSauce = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
 }
 
-exports.likeOrNot = (req, res, next) => {
+exports.likeOrNotLike = (req, res, next) => {
   if (req.body.like === 1) {
     Sauce.updateOne(
       { _id: req.params.id },
