@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const helmet = require('helmet');
 const cors = require('cors');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config();
 
 mongoose.connect( process.env.MONGODB_URI , {
     dbName: process.env.DB_NAME,
@@ -37,11 +38,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json())
 
-app.use(helmet({
-    crossOriginRessourcePolicy: false,
-})); // erreur d'affichage image avec helmet
-
 app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use(helmet()); // attention bien placer helmet sinon erreur 
 app.use('/api/sauces', stuffRoutes)
 app.use('/api/auth', userRoutes)
  
