@@ -20,7 +20,7 @@ mongoose.connect( process.env.MONGODB_URI , {
 //const sauceRoute = require('./models/Sauce');
 const userRoutes = require('./routes/user');
 //const Sauce = require('./models/Sauce');
-const stuffRoutes = require('./routes/stuff')
+const stuffRoutes = require('./routes/sauce')
 
 const app = express();
 
